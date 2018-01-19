@@ -36,9 +36,7 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             // Request.UserHostAddress;
 
             Lab4IntrusionLog model = new Lab4IntrusionLog();
-
-            // Hint:
-            //model.logIntrusion();
+            intrusion_detected = model.logIntrusion(Request.UserHostAddress, Request.Browser.Platform, string.Format("{0}", username));
 
             if (intrusion_detected)
             {
@@ -47,8 +45,25 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             else
             {
                 // check username and password
+                if (isValidEmail(username))
+                {
+                    
+                }
                 // this does not have to be implemented!
                 return RedirectToAction("Index", "Lab4");
+            }
+        }
+
+        private bool isValidEmail(string username)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(username);
+                return addr.Address == username;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
