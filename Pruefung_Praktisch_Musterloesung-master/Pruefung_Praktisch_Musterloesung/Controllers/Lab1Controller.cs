@@ -14,7 +14,7 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
          * 1 => Overview: http://localhost:50374/Lab1/index?type=lions
          * Detail: http://localhost:50374/Lab1/Detail?file=Lion1.jpg&type=lions
          * -> Man gibt in der URL eigene parameter an und kann somit die Seite zum abstürzen bringen.
-         * fix => Line 95
+         * fix => Line 55 & 95
          * 
          * */
 
@@ -25,7 +25,7 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
 
             if (string.IsNullOrEmpty(type))
             {
-                type = "lions";                
+                type = "lions";
             }
 
             var path = "~/Content/images/" + type;
@@ -34,10 +34,10 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
 
             if (Directory.Exists(Server.MapPath(path)))
             {
-                var scheme = Request.Url.Scheme; 
-                var host = Request.Url.Host; 
+                var scheme = Request.Url.Scheme;
+                var host = Request.Url.Host;
                 var port = Request.Url.Port;
-                
+
                 string[] fileEntries = Directory.GetFiles(Server.MapPath(path));
                 foreach (var filepath in fileEntries)
                 {
@@ -52,7 +52,12 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
                     fileUriList.Add(urilistelement);
                 }
             }
-            
+            //fix
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View(fileUriList);
         }
 
@@ -95,7 +100,7 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             //fix
             else
             {
-                return RedirectToAction("Index", "Lab1");
+                return RedirectToAction("Index", "Home");
             }
             
             return View(fileUriItem);
