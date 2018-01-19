@@ -11,7 +11,10 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
     {
         /**
          * 
-         * ANTWORTEN BITTE HIER
+         * 1 => Overview: http://localhost:50374/Lab1/index?type=lions
+         * Detail: http://localhost:50374/Lab1/Detail?file=Lion1.jpg&type=lions
+         * -> Man gibt in der URL eigene parameter an und kann somit die Seite zum abstürzen bringen.
+         * fix => Line 95
          * 
          * */
 
@@ -70,8 +73,8 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
             var relpath = "~/Content/images/" + type + "/" + file;
 
             List<List<string>> fileUriItem = new List<List<string>>();
-            var path = Server.MapPath(relpath);
 
+            var path = Server.MapPath(relpath);
             if (System.IO.File.Exists(path))
             {
                 var scheme = Request.Url.Scheme;
@@ -88,6 +91,11 @@ namespace Pruefung_Praktisch_Musterloesung.Controllers
                 urilistelement.Add(type);
 
                 fileUriItem.Add(urilistelement);
+            }
+            //fix
+            else
+            {
+                return RedirectToAction("Index", "Lab1");
             }
             
             return View(fileUriItem);
